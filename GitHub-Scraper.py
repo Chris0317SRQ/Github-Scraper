@@ -1,13 +1,10 @@
 from bs4 import BeautifulSoup
 import re
 from urllib.request import urlopen
-
 html = urlopen("https://github.com/nasa/astrobee/tree/70e3df03ff3f880d302812111d0107f3c14dccc0/communications/ff_msgs/msg").read().decode('utf-8')
 soup = BeautifulSoup(html, features='lxml')
 all_a = soup.find_all('a')
 all_href = [l['href'] for l in all_a]
-print(len(all_href))
-#print('\n', all_href)
 for i in range(len(all_href)):
   if ".msg" in all_href[i]:
     url=re.findall(r"/\w*.msg", all_href[i])
@@ -22,4 +19,3 @@ for i in range(len(all_href)):
       require[j]=require[j].replace("=","")
       require[j]=re.sub(r"\s+","|",require[j])
       print("|",require[j],"|")
- 
